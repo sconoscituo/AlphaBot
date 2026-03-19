@@ -10,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import get_settings
 from app.database import init_db
 from app.routers import backtest, users
+from app.middleware.security_headers import SecurityHeadersMiddleware
 
 settings = get_settings()
 
@@ -44,6 +45,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.add_middleware(SecurityHeadersMiddleware)
 
 # 라우터 등록
 app.include_router(users.router, prefix="/api/users", tags=["users"])
